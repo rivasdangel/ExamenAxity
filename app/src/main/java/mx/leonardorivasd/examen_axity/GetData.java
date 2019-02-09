@@ -38,16 +38,17 @@ public class GetData extends AsyncTask{
 
     @Override
     protected Object doInBackground(Object[] objects) {
-        URL githubEndpoint = null;
+        URL dataURL = null;
         try {
-            githubEndpoint = new URL("https://super.walmart.com.mx/api/rest/model/atg/commerce/catalog/ProductCatalogActor/getSkuSummaryDetails?storeId=0000009999&upc=00750129560012&skuId=00750129560012");
+            //Se crea la URL para la conexión
+            dataURL = new URL("https://super.walmart.com.mx/api/rest/model/atg/commerce/catalog/ProductCatalogActor/getSkuSummaryDetails?storeId=0000009999&upc=00750129560012&skuId=00750129560012");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        // Create connection
+        // Crear conexión
         try {
-            HttpsURLConnection myConnection = (HttpsURLConnection) githubEndpoint.openConnection();
-            myConnection.setRequestProperty("accept", "application/json'");
+            HttpsURLConnection myConnection = (HttpsURLConnection) dataURL.openConnection();
+            myConnection.setRequestProperty("accept", "application/json'"); //Se agregan headers solicitados
             myConnection.setRequestProperty("connection", "keep-alive");
             myConnection.setRequestProperty("content-type", "application/json");
             if (myConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {//HTTP_OK code is 200
@@ -76,9 +77,12 @@ public class GetData extends AsyncTask{
 
     @Override
     protected void onPostExecute(Object o) {
+        //Al termino del proceso se obtiene el JSON
         super.onPostExecute(o);
         try {
+            ///Se parsea el dato a un objeto manejable
             JSONObject jsonObject = new JSONObject(o.toString());
+            //Se asignan los datos a sus respectivos TextView
             this.tvProducto.setText(jsonObject.get("skuDisplayNameText").toString());
             this.tvDepartamento.setText(jsonObject.get("department").toString());
             this.tvId.setText(jsonObject.getJSONObject("sku").get("id").toString());
