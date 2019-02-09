@@ -25,6 +25,17 @@ public class GetData extends AsyncTask{
     private TextView tvPrecio;
     private Context context;
 
+
+    public GetData(TextView tvProducto, TextView tvDepartamento, TextView tvId, TextView tvPrecio, Context context) {
+        this.tvProducto = tvProducto;
+        this.tvDepartamento = tvDepartamento;
+        this.tvId = tvId;
+        this.tvPrecio = tvPrecio;
+        this.context = context;
+    }
+
+
+
     @Override
     protected Object doInBackground(Object[] objects) {
         URL githubEndpoint = null;
@@ -66,14 +77,6 @@ public class GetData extends AsyncTask{
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-        try {
-            JSONObject jsonObject = new JSONObject(o.toString());
-            this.tvProducto.setText(jsonObject.get("skuDisplayNameText").toString());
-            this.tvDepartamento.setText(jsonObject.get("department").toString());
-            this.tvId.setText(jsonObject.getJSONObject("sku").get("id").toString());
-            this.tvPrecio.setText(jsonObject.get("basePrice").toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
     }
 }
