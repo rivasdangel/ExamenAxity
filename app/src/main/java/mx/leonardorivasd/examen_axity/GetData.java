@@ -52,8 +52,9 @@ public class GetData extends AsyncTask{
             myConnection.setRequestProperty("connection", "keep-alive");
             myConnection.setRequestProperty("content-type", "application/json");
             if (myConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {//HTTP_OK code is 200
+                //Si la conexión es correcta se obtienen los datos de la URL
                 InputStream responseBody = myConnection.getInputStream();
-                InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
+                InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8"); //Codificación de los datos
                 BufferedReader streamReader = new BufferedReader(responseBodyReader);
                 StringBuilder responseStrBuilder = new StringBuilder();
 
